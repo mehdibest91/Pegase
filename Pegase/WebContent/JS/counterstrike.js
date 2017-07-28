@@ -9,6 +9,22 @@ $("document").ready(function(){
 	}
 });
 
+
+$.ajax({
+    url : 'Manager',
+    type : 'POST',
+    data : {"function":"helloWorld"},
+    dataType : "json",
+    success : function(monJson){
+    	msgPegase.html(monJson.messagePegase);
+    	msgHermes.html(monJson.messageHermes);
+    },
+    error : function(){
+    	msgPegase.html("Une erreur est survenue, reporter l'opération")
+    	msgHermes.html("Une erreur est survenue sur Pegase, reporter l'opération")
+    }
+ });
+
 //le # récupère un ID
 $("#gameProgress").click(function(e){
 	e.stopPropagation(); // enlève les conflits JS
@@ -33,34 +49,26 @@ $("#gameProgress").click(function(e){
 	 });
 });
 
-$("#helloWorld").click(function(e){
-	//e.stopPropagation(); // enlève les conflits JS
-	var btn = $("#helloWorld");
-	var msgPegase = $("#messagePegase");
-	var msgHermes = $("#messageHermes");
-	$.ajax({
-	    url : 'Manager',
-	    type : 'POST',
-	    data : {"function":"helloWorld"},
-	    dataType : "json",
-	    success : function(monJson){
-	    	msgPegase.html(monJson.messagePegase);
-	    	msgHermes.html(monJson.messageHermes);
-	    },
-	    error : function(){
-	    	msgPegase.html("Une erreur est survenue, reporter l'opération")
-	    	msgHermes.html("Une erreur est survenue sur Pegase, reporter l'opération")
-	    }
-	 });
-});
 
-if ($("#gameProgress").html() == "ON"){
-	stateError = 0;
-	$('#helloWorld').prop('disabled', false);
-} else {
-	stateError = 1;
-	$('#helloWorld').prop('disabled', true);
+
+
+function lock_buttons(disabled_value) {
+	if ($("#gameProgress").html() == "ON"){
+		stateError = 0;
+		var elems = document.getElementsByClassName("btn btn-warning");
+		for(var i = 0; i < elems.length; i++) {
+		    elems[i].disabled = disabled_value;
+		}
+	} else {
+		stateError = 1;
+		var elems = document.getElementsByClassName("btn btn-warning");
+		for(var i = 0; i < elems.length; i++) {
+		    elems[i].disabled = disabled_value;
+		}
+	}
 }
+
+lock_buttons(true)
 
 function toggleOn() {
 	var msgPegase = $("#messagePegase");
@@ -69,8 +77,10 @@ function toggleOn() {
 	var toto = $("#myToggle").parent();
 	if (toto.hasClass("off")){
 		state = "OFF";
+		lock_buttons(false)
 	} else {
 		state = "ON";
+		lock_buttons(true)
 	}
 	$.ajax({
 	    url : 'Manager', // La ressource ciblée

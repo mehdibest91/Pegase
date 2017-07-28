@@ -50,13 +50,9 @@
 					<div class="row" id="breadcrumbGenerale">
 						<div class="col-md-12">
 							<ul class="breadcrumb">
-								<li><a href="#" class="disabled">Vue Générale</a></li>
-								<li><a href="#"> Partie : Counter Strike</a></li>
-								<li class="active">Counter-Terrorists</li>
-								<li class="active">Terrorists</li>
+								<li><a href="Manager" class="disabled">Vue Générale</a></li>
+								<li><a href="counterstrike.jsp"> Partie : Counter Strike</a></li>
 								<li><a href="#"> Pylônes : 2 connectés</a></li>
-								<li class="active">Pylône 1</li>
-								<li class="active">Pylône 2</li>
 							</ul>
 						</div>
 					</div>
